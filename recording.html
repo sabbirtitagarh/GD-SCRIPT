@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self'; manifest-src 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Recording Studio – GD SCRIPT</title>
+<meta name="description" content="GD SCRIPT – free, installable mobile teleprompter by GD TECH ACADEMY.">
+<meta name="theme-color" content="#051b62">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GD SCRIPT">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/teleprompter.css">
+</head>
+<body>
+<div class="splash" id="splash"><img src="assets/icons/icon-192.png" alt="GD SCRIPT"></div>
+<noscript><div class="banner err" style="margin:16px">GD SCRIPT needs JavaScript. Please enable it in your browser.</div></noscript>
+<main class="container narrow" style="max-width:760px">
+  <h1 data-ic="video"><span data-i18n="dash.studio">Recording Studio</span></h1>
+  <div id="recSupport" class="banner err hide"></div>
+  <div class="card mb">
+    <div class="grid cols-2">
+      <div class="field"><label for="rScript">Script to show on screen</label><select class="select" id="rScript"><option value="">No script (camera only)</option></select></div>
+      <div class="field"><label for="rCam">Camera</label><select class="select" id="rCam"><option value="user">Front camera (selfie)</option><option value="environment">Rear camera</option></select></div>
+      <div class="field"><label for="rMic">Microphone</label><select class="select" id="rMic"><option value="">Default microphone</option></select></div>
+      <div class="field"><label for="rRes">Video quality</label><select class="select" id="rRes"><option value="720">HD 720p</option><option value="1080">Full HD 1080p</option><option value="480">SD 480p (smaller file)</option></select></div>
+      <div class="field"><label for="rOrient">Orientation</label><select class="select" id="rOrient"><option value="portrait">Portrait (reels / shorts)</option><option value="landscape">Landscape (YouTube)</option></select></div>
+      <div class="field"><label for="rCount">Countdown</label><select class="select" id="rCount"><option value="0">None</option><option value="3" selected>3 seconds</option><option value="5">5 seconds</option><option value="10">10 seconds</option></select></div>
+    </div>
+    <label class="switch"><input type="checkbox" id="rMirror" checked><span>Mirror my preview (the saved video is not mirrored)</span></label>
+    <label class="switch"><input type="checkbox" id="rOverlay" checked><span>Show script over the camera and scroll it while recording</span></label>
+    <div class="row mt"><button class="btn" id="btnCam" type="button" data-ic="camera">Start camera</button><button class="btn outline hide" id="btnFlip" type="button" data-ic="refresh">Switch camera</button></div>
+    <p class="muted small mt" id="rHint">Your browser will ask for permission to use the camera and microphone. Nothing is uploaded – recordings stay on this device until you download them.</p>
+  </div>
+
+  <div class="rec-stage" id="recStage">
+    <video id="recVideo" playsinline muted autoplay></video>
+    <div class="scrim-top"></div>
+    <div class="tp-viewport hidden" id="tpViewport"><div class="tp-stage" id="tpStage"><div class="tp-content" id="tpContent"></div><div class="tp-guide" id="tpGuide"></div></div>
+      <div class="tp-countdown" id="tpCd"></div></div>
+    <div class="rec-hud"><span class="rec-badge hide" id="recBadge"><span class="dot"></span><span id="recTime">00:00</span></span><span class="rec-badge hide" id="recSize"></span></div>
+  </div>
+
+  <div class="row mt" style="justify-content:center;gap:18px" id="recControls">
+    <button class="btn outline icon" id="btnPauseRec" type="button" aria-label="Pause recording" data-ic="pause" disabled></button>
+    <button class="rec-btn" id="btnRec" type="button" aria-label="Start recording" disabled><i></i></button>
+    <button class="btn outline icon" id="btnScrollOnly" type="button" aria-label="Rehearse: scroll script without recording" data-ic="play" disabled></button>
+  </div>
+  <p class="center small muted mt" id="recStatus">Start the camera to begin.</p>
+
+  <section class="card mt" id="lastCard" hidden>
+    <h2 data-ic="check">Your recording</h2>
+    <video id="lastVideo" controls playsinline style="width:100%;border-radius:14px;max-height:50vh;background:#000"></video>
+    <div class="row mt"><button class="btn" id="btnDl" type="button" data-ic="download">Download video</button><button class="btn outline" id="btnSaveLocal" type="button" data-ic="check">Keep on this device</button><button class="btn ghost" id="btnDiscard" type="button">Discard</button></div>
+    <p class="small muted mt" id="lastInfo"></p>
+  </section>
+
+  <section class="card mt">
+    <h2 data-ic="folder">Saved on this device</h2>
+    <div id="savedList"><p class="muted small">Nothing saved yet.</p></div>
+  </section>
+</main>
+<script src="js/lang-loader.js"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/drive.js"></script>
+<script src="js/voice-match.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/recording.js"></script>
+</body>
+</html>

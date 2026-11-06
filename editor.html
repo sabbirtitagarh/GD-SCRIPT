@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self'; manifest-src 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Script editor – GD SCRIPT</title>
+<meta name="description" content="GD SCRIPT – free, installable mobile teleprompter by GD TECH ACADEMY.">
+<meta name="theme-color" content="#051b62">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GD SCRIPT">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="splash" id="splash"><img src="assets/icons/icon-192.png" alt="GD SCRIPT"></div>
+<noscript><div class="banner err" style="margin:16px">GD SCRIPT needs JavaScript. Please enable it in your browser.</div></noscript>
+<main class="container narrow" style="max-width:820px">
+  <div class="row mb">
+    <a class="btn outline icon" href="dashboard.html" aria-label="Back" data-ic="home"></a>
+    <span class="chip" id="saveState">Saved</span>
+    <span class="spacer"></span>
+    <button class="btn outline icon" id="btnFav" type="button" aria-label="Favourite" aria-pressed="false" data-ic="star"></button>
+    <button class="btn outline icon" id="btnMore" type="button" aria-label="More" aria-haspopup="menu" data-ic="dots"></button>
+    <button class="btn" id="btnSave" type="button" data-ic="check"><span data-i18n="btn.save">Save</span></button>
+  </div>
+  <div class="card">
+    <div class="field"><label for="title">Title</label><input class="input" id="title" maxlength="120" autocomplete="off" placeholder="My script"></div>
+    <div class="field"><label for="cat">Folder / category</label><select class="select" id="cat"></select></div>
+    <div class="field">
+      <label for="body">Script</label>
+      <div class="row mb">
+        <button class="btn outline sm" id="btnPaste" type="button" data-ic="copy">Paste</button>
+        <button class="btn outline sm" id="btnBm" type="button" data-ic="bookmark">Add bookmark</button>
+        <button class="btn outline sm" id="btnImportTxt" type="button" data-ic="upload"><span data-i18n="btn.import">Import TXT</span></button>
+        <input type="file" id="fileTxt" accept=".txt,.md,text/plain" hidden>
+        <button class="btn outline sm" id="btnExport" type="button" data-ic="download"><span data-i18n="btn.export">Export TXT</span></button>
+      </div>
+      <textarea class="textarea" id="body" rows="16" style="min-height:46vh;font-size:1.05rem" placeholder="Type or paste your script here. Leave an empty line between paragraphs."></textarea>
+      <div class="row small muted"><span id="wc">0 words</span><span>·</span><span id="rt">0 min</span><span class="spacer"></span><span id="drv"></span></div>
+    </div>
+    <div class="row">
+      <a class="btn secondary lg" id="btnRead" href="#" data-ic="play"><span data-i18n="btn.read">Read</span> in teleprompter</a>
+      <a class="btn outline lg" id="btnRec" href="recording.html" data-ic="video"><span data-i18n="dash.studio">Recording Studio</span></a>
+    </div>
+  </div>
+</main>
+<script src="js/lang-loader.js"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/editor.js"></script>
+</body>
+</html>

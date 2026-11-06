@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self'; manifest-src 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Log in – GD SCRIPT</title>
+<meta name="description" content="GD SCRIPT – free, installable mobile teleprompter by GD TECH ACADEMY.">
+<meta name="theme-color" content="#051b62">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GD SCRIPT">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="splash" id="splash"><img src="assets/icons/icon-192.png" alt="GD SCRIPT"></div>
+<noscript><div class="banner err" style="margin:16px">GD SCRIPT needs JavaScript. Please enable it in your browser.</div></noscript>
+<main class="container">
+  <div class="auth-wrap"><div class="auth-card">
+    <div class="auth-logo"><img data-brand-logo src="assets/logo.png" alt="Logo"></div>
+    <div class="card">
+      <h1 class="center" data-i18n="misc.login">Log in</h1>
+      <div id="cfgBanner" class="banner err hide">The server address is not set yet. The platform owner must paste the Apps Script Web App URL in <b>js/config.js</b>. You can still try the app without an account.</div>
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" id="tabLogin" aria-selected="true">Log in</button>
+        <button type="button" role="tab" id="tabForgot" aria-selected="false">Forgot password</button>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="field"><label for="lUser">Username or email</label><input class="input" id="lUser" autocomplete="username" autocapitalize="none" spellcheck="false" required></div>
+        <div class="field"><label for="lPass">Password</label>
+          <div class="pw"><input class="input" id="lPass" type="password" autocomplete="current-password" required><button type="button" class="btn ghost icon sm" data-toggle-pw="lPass" aria-label="Show password" data-ic="eye"></button></div></div>
+        <label class="switch"><input type="checkbox" id="lRemember" checked><span>Keep me logged in on this device</span></label>
+        <div class="err-msg" id="lErr" role="alert"></div>
+        <button class="btn block lg" type="submit" id="lBtn">Log in</button>
+      </form>
+
+      <div id="forgotBox" class="hide">
+        <form id="forgotForm" novalidate>
+          <p class="muted small">Enter your username or email. We will email you an 8-character code (valid for 15 minutes).</p>
+          <div class="field"><label for="fIdent">Username or email</label><input class="input" id="fIdent" autocomplete="username" autocapitalize="none" required></div>
+          <div class="err-msg" id="fErr" role="alert"></div>
+          <button class="btn block" type="submit" id="fBtn">Send reset code</button>
+        </form>
+        <form id="resetForm" class="mt" novalidate>
+          <div class="field"><label for="rCode">Reset code from email</label><input class="input" id="rCode" autocomplete="one-time-code" autocapitalize="characters" maxlength="8" required></div>
+          <div class="field"><label for="rPass">New password</label>
+            <div class="pw"><input class="input" id="rPass" type="password" autocomplete="new-password" required><button type="button" class="btn ghost icon sm" data-toggle-pw="rPass" aria-label="Show password" data-ic="eye"></button></div>
+            <span class="hint">At least 8 characters with a letter and a number.</span></div>
+          <div class="err-msg" id="rErr" role="alert"></div>
+          <button class="btn block" type="submit" id="rBtn">Set new password</button>
+        </form>
+      </div>
+
+      <p class="center small mt">New here? <a href="register.html">Create a free account</a></p>
+      <p class="center small"><button class="btn ghost sm" id="btnGuest" type="button">Continue without an account</button></p>
+    </div>
+  </div></div>
+</main>
+<script src="js/lang-loader.js"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

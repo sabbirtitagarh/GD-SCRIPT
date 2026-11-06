@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self'; manifest-src 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Dashboard – GD SCRIPT</title>
+<meta name="description" content="GD SCRIPT – free, installable mobile teleprompter by GD TECH ACADEMY.">
+<meta name="theme-color" content="#051b62">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GD SCRIPT">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="splash" id="splash"><img src="assets/icons/icon-192.png" alt="GD SCRIPT"></div>
+<noscript><div class="banner err" style="margin:16px">GD SCRIPT needs JavaScript. Please enable it in your browser.</div></noscript>
+<main class="container">
+  <div id="guestBanner" class="banner info hide"><span data-ic="info"></span><div class="grow"><b>You are using GD SCRIPT without an account.</b> Scripts are saved only in this browser. <a href="register.html">Create a free account</a> to save them in your own Google Drive and use them on every device.</div></div>
+  <div id="syncBanner" class="banner hide"></div>
+
+  <section class="hero">
+    <h1 id="welcomeTitle">Welcome</h1>
+    <p id="welcomeMsg">Write, read and record – all in one place.</p>
+    <div class="row mt">
+      <a class="btn secondary lg" href="editor.html?new=1" data-ic="plus"><span data-i18n="btn.new">New script</span></a>
+      <a class="btn lg" id="btnLast" href="#" data-ic="play" style="background:rgba(255,255,255,.18);color:inherit">Open teleprompter</a>
+      <button class="btn lg" id="btnImport" type="button" data-ic="upload" style="background:rgba(255,255,255,.18);color:inherit"><span data-i18n="btn.import">Import TXT</span></button>
+      <input type="file" id="fileImport" accept=".txt,.md,text/plain" multiple hidden>
+    </div>
+  </section>
+
+  <section class="grid stats mt">
+    <div class="card stat"><b id="stScripts">–</b><span data-i18n="dash.scripts">Scripts</span></div>
+    <div class="card stat"><b id="stFavs">–</b><span data-i18n="dash.favs">Favourites</span></div>
+    <div class="card stat"><b id="stWords">–</b><span>Total words</span></div>
+    <div class="card stat"><b id="stSync" style="font-size:1.05rem;padding-top:6px">–</b><span data-i18n="dash.drive">Google Drive</span></div>
+  </section>
+
+  <section class="grid cols-2 mt">
+    <div class="card"><h2 data-ic="clock"><span data-i18n="dash.recent">Recent scripts</span></h2><div class="script-list" id="recentList"></div></div>
+    <div class="card"><h2 data-ic="star"><span data-i18n="dash.fav">Favourite scripts</span></h2><div class="script-list" id="favList"></div></div>
+  </section>
+
+  <section class="card mt">
+    <h2 data-ic="list"><span data-i18n="dash.all">My scripts</span></h2>
+    <div class="row nowrap mb">
+      <input class="input" id="q" type="search" data-i18n-ph="dash.search" placeholder="Search scripts…" aria-label="Search scripts">
+      <select class="select" id="sort" aria-label="Sort" style="max-width:160px"><option value="updated">Newest</option><option value="title">A–Z</option><option value="words">Longest</option></select>
+    </div>
+    <div class="chips mb" id="cats"></div>
+    <div class="script-list" id="allList"></div>
+  </section>
+
+  <section class="grid cols-2 mt">
+    <div class="card" id="driveCard"><h2 data-ic="cloud"><span data-i18n="dash.drive">Google Drive</span></h2><div id="driveBody"></div></div>
+    <div class="card"><h2 data-ic="layers">Tools</h2>
+      <div class="col">
+        <a class="btn outline" href="recording.html" data-ic="video"><span data-i18n="dash.studio">Recording Studio</span></a>
+        <a class="btn outline" href="settings.html#brand" data-ic="palette"><span data-i18n="dash.brand">My Brand Settings</span></a>
+        <a class="btn outline" href="settings.html#tp" data-ic="settings">Teleprompter settings</a>
+        <button class="btn outline hide" id="btnInstall" type="button" data-ic="phone">Install app on this device</button>
+        <p class="small muted hide" id="iosHint">On iPhone / iPad: tap the <b>Share</b> button in Safari, then <b>Add to Home Screen</b>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card mt" id="help">
+    <h2 data-ic="help"><span data-i18n="dash.help">Help &amp; Support</span></h2>
+    <details class="faq"><summary>How do I start reading a script?</summary><p>Tap <b>Read</b> on any script. Press the big play button. Drag the text with your finger to move manually, or use ↑ ↓ to change speed.</p></details>
+    <details class="faq"><summary>How can I add section bookmarks?</summary><p>In the editor tap <b>Add bookmark</b> – it inserts a line like <span class="kbd">[[Intro]]</span>. In the teleprompter open the bookmark menu to jump to it.</p></details>
+    <details class="faq"><summary>Where are my scripts stored?</summary><p>On this device always. If you connect Google Drive, also in a “GD SCRIPT” folder in your own Drive, so you can use them on other devices.</p></details>
+    <details class="faq"><summary>Voice Follow is not working</summary><p>It needs Chrome, Edge or Safari, internet, microphone permission and a speech language that matches your script. Roman-script Hindi/Bengali (typed in English letters) cannot be matched.</p></details>
+    <details class="faq"><summary>Can I use a Bluetooth clicker or keyboard?</summary><p>Yes. Page Down / Page Up = next / previous paragraph, Space = play / pause, arrows = speed. Press <span class="kbd">?</span> in the teleprompter for the full list.</p></details>
+    <p class="mt small">Still stuck? Write to <a id="supportMail" href="#">support</a>.</p>
+  </section>
+</main>
+<script src="js/lang-loader.js"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/drive.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

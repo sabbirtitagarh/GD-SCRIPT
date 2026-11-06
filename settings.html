@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self'; manifest-src 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Settings – GD SCRIPT</title>
+<meta name="description" content="GD SCRIPT – free, installable mobile teleprompter by GD TECH ACADEMY.">
+<meta name="theme-color" content="#051b62">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GD SCRIPT">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="splash" id="splash"><img src="assets/icons/icon-192.png" alt="GD SCRIPT"></div>
+<noscript><div class="banner err" style="margin:16px">GD SCRIPT needs JavaScript. Please enable it in your browser.</div></noscript>
+<main class="container narrow" style="max-width:760px">
+  <h1 data-ic="settings"><span data-i18n="nav.settings">Settings</span></h1>
+  <div id="guestBanner" class="banner info hide"><span data-ic="info"></span><div class="grow">Guest mode: settings are saved on this device only. <a href="register.html">Create an account</a> to keep them everywhere.</div></div>
+
+  <section class="card mb" id="account">
+    <h2 data-ic="user"><span data-i18n="set.account">Account</span></h2>
+    <div id="accountGuest" class="hide"><p class="muted">You are not logged in.</p><div class="row"><a class="btn" href="register.html">Create account</a><a class="btn outline" href="login.html">Log in</a></div></div>
+    <div id="accountUser" class="hide">
+      <p>Logged in as <b id="acUser">–</b></p>
+      <div class="field"><label for="acMail">Email</label><div class="row nowrap"><input class="input" id="acMail" type="email" autocomplete="email"><button class="btn outline" id="btnMail" type="button">Update</button></div></div>
+      <h3>Change password</h3>
+      <div class="field"><label for="pwOld">Current password</label><input class="input" id="pwOld" type="password" autocomplete="current-password"></div>
+      <div class="field"><label for="pwNew">New password</label><input class="input" id="pwNew" type="password" autocomplete="new-password"><span class="hint">At least 8 characters with a letter and a number. Other devices are logged out.</span></div>
+      <button class="btn outline" id="btnPw" type="button">Change password</button>
+      <div class="row mt"><button class="btn outline" id="btnLogout" type="button" data-ic="logout"><span data-i18n="nav.logout">Log out</span></button><button class="btn outline" id="btnLogoutAll" type="button">Log out on all devices</button></div>
+    </div>
+  </section>
+
+  <section class="card mb" id="brand">
+    <h2 data-ic="palette"><span data-i18n="set.brand">My Brand Settings</span></h2>
+    <p class="muted small">Your own app name, logo and colours. Only you see them; other users keep their own. The “Powered by GD TECH ACADEMY” credit always stays.</p>
+    <div class="card flat mb" id="brandPreview" style="padding:0;overflow:hidden">
+      <div class="row nowrap" id="bpHead" style="padding:12px 14px;border-bottom:1px solid var(--border);background:var(--surface)">
+        <img id="bpLogo" src="assets/logo.png" alt="" width="40" height="40" style="border-radius:10px;object-fit:contain;background:var(--surface-2)">
+        <div style="min-width:0"><b id="bpName">GD SCRIPT</b><div class="small muted" id="bpSub"></div></div>
+      </div>
+      <div style="padding:14px" id="bpBody"><p id="bpWelcome" style="margin:0 0 10px">Welcome!</p><div class="row"><span class="btn sm" id="bpBtn1">Primary</span><span class="btn sm secondary" id="bpBtn2">Secondary</span></div></div>
+    </div>
+    <div class="grid cols-2">
+      <div class="field"><label for="bAppName">Application name</label><input class="input" id="bAppName" maxlength="40"></div>
+      <div class="field"><label for="bBrandName">Business / brand name</label><input class="input" id="bBrandName" maxlength="60" placeholder="e.g. My Creator Studio"></div>
+    </div>
+    <div class="field"><label for="bWelcome">Custom welcome message</label><input class="input" id="bWelcome" maxlength="200" placeholder="Shown on your dashboard"></div>
+    <div class="grid cols-3">
+      <div class="field"><label for="bPrimary">Primary colour</label><input class="input" id="bPrimary" type="color"></div>
+      <div class="field"><label for="bSecondary">Secondary colour</label><input class="input" id="bSecondary" type="color"></div>
+      <div class="field"><label for="bBg">Background colour</label><input class="input" id="bBg" type="color"></div>
+    </div>
+    <div class="grid cols-2">
+      <div class="field"><label for="bFont">Font style</label><select class="select" id="bFont"></select></div>
+      <div class="field"><label for="bTheme">Theme</label><select class="select" id="bTheme"><option value="auto">Automatic (follow device)</option><option value="light">Light</option><option value="dark">Dark</option></select></div>
+    </div>
+    <div class="field"><label>Logo</label>
+      <div class="row"><button class="btn outline" id="btnLogo" type="button" data-ic="upload">Upload logo</button><button class="btn ghost" id="btnLogoDefault" type="button">Use GD TECH ACADEMY logo</button><input type="file" id="fileLogo" accept="image/png,image/jpeg,image/webp" hidden></div>
+      <span class="hint">PNG, JPG or WebP. It is resized automatically (max 256 px).</span></div>
+    <div class="row"><button class="btn" id="btnBrandSave" type="button" data-ic="check">Save branding</button><button class="btn outline" id="btnBrandReset" type="button">Restore default branding</button></div>
+  </section>
+
+  <section class="card mb" id="drive">
+    <h2 data-ic="cloud"><span data-i18n="set.drive">Google Drive</span></h2>
+    <div id="driveBox"></div>
+  </section>
+
+  <section class="card mb" id="tp">
+    <h2 data-ic="play"><span data-i18n="set.tp">Teleprompter Settings</span></h2>
+    <div class="grid cols-2">
+      <div class="field"><label for="dFont">Default text size</label><div class="range-row"><input type="range" id="dFont" min="20" max="160" step="2"><output id="dFontO"></output></div></div>
+      <div class="field"><label for="dSpeed">Default scrolling speed</label><div class="range-row"><input type="range" id="dSpeed" min="1" max="100"><output id="dSpeedO"></output></div></div>
+    </div>
+    <div class="grid cols-2">
+      <div class="field"><label for="dTheme">Default reading theme</label><select class="select" id="dTheme"></select></div>
+      <div class="field"><label for="dFam">Default font</label><select class="select" id="dFam"></select></div>
+    </div>
+    <div class="field"><label for="dCount">Countdown before start</label><div class="range-row"><input type="range" id="dCount" min="0" max="10"><output id="dCountO"></output></div></div>
+    <label class="switch"><input type="checkbox" id="dGuide"><span>Show reading guide</span></label>
+    <label class="switch"><input type="checkbox" id="dMirror"><span>Mirror text (for beam-splitter glass)</span></label>
+    <p class="muted small">More options (colours, margins, line spacing, voice language) are in the teleprompter's own settings panel.</p>
+  </section>
+
+  <section class="card mb" id="lang">
+    <h2 data-ic="globe"><span data-i18n="set.lang">Language</span></h2>
+    <div class="field"><label for="dLang">App language</label><select class="select" id="dLang"><option value="en">English</option><option value="hi">हिन्दी</option><option value="bn">বাংলা</option><option value="ur">اردو</option></select></div>
+  </section>
+
+  <section class="card mb" id="data">
+    <h2 data-ic="download"><span data-i18n="set.data">Data export</span></h2>
+    <p class="muted small">Download all your scripts as one backup file, or load a backup you saved earlier. Importing never overwrites existing scripts.</p>
+    <div class="row"><button class="btn outline" id="btnExportAll" type="button" data-ic="download">Export all scripts (JSON)</button><button class="btn outline" id="btnImportAll" type="button" data-ic="upload">Import backup</button><input type="file" id="fileBackup" accept="application/json,.json" hidden></div>
+    <div class="row mt"><button class="btn outline" id="btnWipeLocal" type="button" data-ic="trash">Remove scripts from this device</button></div>
+    <div class="progress mt hide" id="exportProg"><i style="width:0"></i></div>
+  </section>
+
+  <section class="card mb" id="app">
+    <h2 data-ic="phone">App</h2>
+    <div class="col">
+      <button class="btn outline hide" id="btnInstall" type="button" data-ic="phone">Install app on this device</button>
+      <p class="small muted hide" id="iosHint">On iPhone / iPad: tap <b>Share</b> in Safari, then <b>Add to Home Screen</b>.</p>
+      <p class="small muted" id="verLine"></p>
+      <p class="small muted"><b>What is stored where:</b> scripts and settings are kept in this browser (IndexedDB / localStorage). With Google Drive connected, scripts are also saved in your own Drive folder. Your account (username, email, hashed password, branding) is stored on the platform's private server sheet. Recordings stay on this device.</p>
+    </div>
+  </section>
+
+  <section class="card mb" id="danger">
+    <h2 data-ic="shield"><span data-i18n="set.danger">Danger zone</span></h2>
+    <p class="muted small">Deleting your account removes your login, branding and settings from the server. Scripts already saved in your own Google Drive are <b>not</b> deleted.</p>
+    <button class="btn danger outline" id="btnDelete" type="button" data-ic="trash">Delete my account</button>
+  </section>
+</main>
+<script src="js/lang-loader.js"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/branding.js"></script>
+<script src="js/drive.js"></script>
+<script src="js/settings.js"></script>
+</body>
+</html>

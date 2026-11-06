@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" class="tp-page">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self'; manifest-src 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Teleprompter – GD SCRIPT</title>
+<meta name="description" content="GD SCRIPT – free, installable mobile teleprompter by GD TECH ACADEMY.">
+<meta name="theme-color" content="#051b62">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="GD SCRIPT">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/teleprompter.css">
+</head>
+<body class="tp-body">
+<div class="splash" id="splash"><img src="assets/icons/icon-192.png" alt="GD SCRIPT"></div>
+<noscript><div class="banner err" style="margin:16px">GD SCRIPT needs JavaScript. Please enable it in your browser.</div></noscript>
+
+<div class="tp-top" id="tpTop">
+  <a class="btn outline icon" id="tpBack" href="dashboard.html" aria-label="Back to dashboard" data-ic="home"></a>
+  <div class="tp-title" id="tpTitle">Loading…</div>
+  <a class="btn outline icon" id="btnEdit" href="editor.html" aria-label="Edit script" data-ic="edit"></a>
+  <button class="btn outline icon" id="btnBookmarks" type="button" aria-label="Bookmarks and navigation" aria-haspopup="menu" data-ic="bookmark"></button>
+  <button class="btn outline icon" id="btnFullscreen" type="button" aria-label="Full screen" data-ic="fullscreen"></button>
+  <button class="btn outline icon" id="btnFocus" type="button" aria-label="Focus mode (hide controls)" aria-pressed="false" data-ic="eyeoff"></button>
+  <button class="btn outline icon" id="btnSettings" type="button" aria-label="Teleprompter settings" data-ic="settings"></button>
+</div>
+
+<div class="tp-viewport" id="tpViewport" role="region" aria-label="Teleprompter reading area">
+  <div class="tp-stage" id="tpStage">
+    <div class="tp-content" id="tpContent" aria-live="off"></div>
+    <div class="tp-guide" id="tpGuide"></div>
+  </div>
+  <div class="tp-progress"><i id="tpProg"></i></div>
+  <div class="tp-chip" id="tpChip" role="status"></div>
+  <div class="tp-countdown" id="tpCd" aria-live="assertive"></div>
+  <div class="tp-end" id="tpEnd"><button class="btn secondary lg" id="endRestart" type="button" data-ic="restart">Restart</button><a class="btn lg" href="dashboard.html" data-ic="home">Done</a></div>
+</div>
+
+<div class="tp-mini" id="tpMini">
+  <button class="btn" id="miniExit" type="button" aria-label="Show controls" data-ic="eye"></button>
+  <button class="btn" id="miniPlay" type="button" aria-label="Play"></button>
+</div>
+
+<div class="tp-dock" id="tpDock">
+  <div class="tp-info" aria-live="off">
+    <div><b id="iElapsed">00:00</b><span data-i18n="tp.elapsed">Elapsed</span></div>
+    <div><b id="iRemain">00:00</b><span data-i18n="tp.remaining">Remaining</span></div>
+    <div><b id="iWords">0</b><span data-i18n="tp.words">Words</span></div>
+    <div><b id="iSpeed">30</b><span data-i18n="tp.speed">Speed</span></div>
+  </div>
+  <div class="row speed">
+    <button class="btn outline icon" id="btnFontDown" type="button" aria-label="Smaller text" data-ic="type" style="font-size:.8rem"></button>
+    <button class="btn outline icon" id="btnSlower" type="button" aria-label="Slower" data-ic="minus"></button>
+    <input type="range" id="rngSpeed" min="1" max="100" aria-label="Scroll speed">
+    <button class="btn outline icon" id="btnFaster" type="button" aria-label="Faster" data-ic="plus"></button>
+    <button class="btn outline icon" id="btnFontUp" type="button" aria-label="Bigger text" data-ic="type" style="font-size:1.3rem"></button>
+  </div>
+  <div class="tp-row">
+    <button class="btn outline icon" id="btnRestart" type="button" aria-label="Restart" data-ic="restart"></button>
+    <button class="btn outline icon" id="btnPrevP" type="button" aria-label="Previous paragraph" data-ic="skipUp"></button>
+    <button class="tp-play" id="btnPlay" type="button" aria-label="Play"></button>
+    <button class="btn outline icon" id="btnNextP" type="button" aria-label="Next paragraph" data-ic="skipDown"></button>
+    <button class="btn outline icon" id="tTop" type="button" aria-label="Jump to beginning" data-ic="arrowUp"></button>
+  </div>
+  <div class="tp-toggles">
+    <button class="btn outline" id="tMirror" type="button" aria-pressed="false" data-ic="mirror">Mirror</button>
+    <button class="btn outline" id="tFlip" type="button" aria-pressed="false" data-ic="flip">Flip</button>
+    <button class="btn outline" id="tReverse" type="button" aria-pressed="false" data-ic="reverse">Reverse</button>
+    <button class="btn outline" id="tGuide" type="button" aria-pressed="true" data-ic="layers">Guide</button>
+    <button class="btn outline" id="tVoice" type="button" aria-pressed="false" data-ic="mic">Voice</button>
+    <button class="btn outline" id="tEnd" type="button" data-ic="arrowDown">End</button>
+  </div>
+</div>
+
+<div class="tp-scrim" id="tpScrim"></div>
+<aside class="tp-drawer" id="tpDrawer" aria-label="Teleprompter settings" aria-hidden="true">
+  <div class="grab"></div>
+  <div class="row"><h2 style="margin:0" data-i18n="set.tp">Teleprompter Settings</h2><span class="spacer"></span><button class="btn outline icon sm" id="drawerClose" type="button" aria-label="Close" data-ic="x"></button></div>
+
+  <h3 data-ic="type">Text</h3>
+  <div class="field"><label for="sFont">Font</label><select class="select" id="sFont"></select></div>
+  <div class="field"><label for="sSize">Text size</label><div class="range-row"><input type="range" id="sSize" min="14" max="240" step="2"><output id="sSizeOut"></output></div></div>
+  <div class="two">
+    <div class="field"><label for="sLine">Line spacing</label><div class="range-row"><input type="range" id="sLine" min="1" max="3" step="0.05"><output id="sLineOut"></output></div></div>
+    <div class="field"><label for="sPara">Paragraph gap</label><div class="range-row"><input type="range" id="sPara" min="0" max="3" step="0.1"><output id="sParaOut"></output></div></div>
+  </div>
+  <div class="field"><span class="lbl">Alignment</span><div class="seg" id="sAlign"><button type="button" data-v="left" aria-pressed="false">Left</button><button type="button" data-v="center" aria-pressed="false">Centre</button><button type="button" data-v="right" aria-pressed="false">Right</button><button type="button" data-v="justify" aria-pressed="false">Justify</button></div></div>
+  <div class="field"><label for="sWidth">Reading width</label><div class="range-row"><input type="range" id="sWidth" min="40" max="100"><output id="sWidthOut"></output></div></div>
+  <div class="two">
+    <div class="field"><label for="sMT">Top margin</label><div class="range-row"><input type="range" id="sMT" min="0" max="40"><output id="sMTOut"></output></div></div>
+    <div class="field"><label for="sMB">Bottom margin</label><div class="range-row"><input type="range" id="sMB" min="0" max="40"><output id="sMBOut"></output></div></div>
+  </div>
+
+  <h3 data-ic="palette">Colours</h3>
+  <div class="swatches mb">
+    <button class="swatch" type="button" data-fg="#ffffff" data-bg="#000000" style="background:#000;color:#fff" aria-label="White on black" aria-pressed="false">Aa</button>
+    <button class="swatch" type="button" data-fg="#000000" data-bg="#ffffff" style="background:#fff;color:#000" aria-label="Black on white" aria-pressed="false">Aa</button>
+    <button class="swatch" type="button" data-fg="#ffe600" data-bg="#000000" style="background:#000;color:#ffe600" aria-label="Yellow on black" aria-pressed="false">Aa</button>
+    <button class="swatch" type="button" data-fg="#39ff88" data-bg="#000000" style="background:#000;color:#39ff88" aria-label="Green on black" aria-pressed="false">Aa</button>
+    <button class="swatch" type="button" data-fg="#fff7d6" data-bg="#051b62" style="background:#051b62;color:#fff7d6" aria-label="Cream on navy" aria-pressed="false">Aa</button>
+  </div>
+  <div class="two">
+    <div class="field"><label for="sText">Text colour</label><input class="input" type="color" id="sText"></div>
+    <div class="field"><label for="sBg">Background</label><input class="input" type="color" id="sBg"></div>
+  </div>
+
+  <h3 data-ic="layers">Reading guide</h3>
+  <label class="switch"><input type="checkbox" id="sGuide"><span>Show reading guide</span></label>
+  <div class="two">
+    <div class="field"><label for="sGuideColor">Guide colour</label><input class="input" type="color" id="sGuideColor"></div>
+    <div class="field"><label for="sGuidePos">Guide position</label><div class="range-row"><input type="range" id="sGuidePos" min="10" max="90"><output id="sGuidePosOut"></output></div></div>
+  </div>
+  <label class="switch"><input type="checkbox" id="sMarkers"><span>Show bookmark labels in the text</span></label>
+
+  <h3 data-ic="timer">Timing</h3>
+  <div class="field"><label for="sCountdown">Countdown before start</label><div class="range-row"><input type="range" id="sCountdown" min="0" max="10"><output id="sCountdownOut"></output></div></div>
+  <div class="field"><label for="sTarget">Target reading time (minutes)</label>
+    <div class="row nowrap"><input class="input" type="number" id="sTarget" min="0" max="600" step="0.5" inputmode="decimal" placeholder="e.g. 3"><button class="btn" id="btnApplyTarget" type="button">Set speed</button></div>
+    <span class="hint" id="targetNote"></span></div>
+
+  <h3 data-ic="mirror">Display</h3>
+  <label class="switch"><input type="checkbox" id="sMirror"><span>Mirror text horizontally</span></label>
+  <label class="switch"><input type="checkbox" id="sFlip"><span>Flip text vertically</span></label>
+
+  <h3 data-ic="mic">Voice Follow</h3>
+  <label class="switch"><input type="checkbox" id="sVoice"><span>Follow my voice</span></label>
+  <div class="field"><label for="sVoiceLang">Speech language</label><select class="select" id="sVoiceLang"></select></div>
+  <p class="muted small" id="voiceNote"></p>
+  <p class="muted small">Keyboard: <span class="kbd">Space</span> play/pause · <span class="kbd">↑↓</span> speed · <span class="kbd">PgUp/PgDn</span> paragraphs · <span class="kbd">?</span> all keys</p>
+</aside>
+<script src="js/lang-loader.js"></script>
+<script src="js/config.js"></script>
+<script src="js/app.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/scripts.js"></script>
+<script src="js/voice-match.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/teleprompter.js"></script>
+</body>
+</html>
