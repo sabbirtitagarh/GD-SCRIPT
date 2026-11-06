@@ -5,7 +5,7 @@
  */
 window.GDS_CONFIG = {
   // Paste your Google Apps Script Web App URL here (ends with /exec). See docs/02-Apps-Script-Deploy.md
-  API_URL: '',
+  API_URL: 'https://script.google.com/macros/s/AKfycbyzVqtPmnKXXbzQjIVlhV0XwGRn3aj-GHpOCCtPqgoWsNqrNP1Bzi3exsjRK3JUo64w/exec',
 
   // Fixed platform credit shown in every page footer (users cannot change it).
   HUB_URL: 'https://sabbirtitagarh.github.io/hub/',
